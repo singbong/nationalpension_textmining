@@ -20,12 +20,14 @@ nationalpension_textmining/
 │   ├───블로그 데이터 시계열 그래프.ipynb      # 블로그 데이터 감성 분석 시계열 시각화
 │   └───카페+블로그 전처리 및 분석.ipynb      # 블로그 및 카페 데이터 전처리, 토픽 모델링, 감성 분석
 │
-└───data/
-    ├───Korean-NRC-EmoLex.txt             # 감성 분석용 사전 (EmoLex)
-    ├───SentiWord_info.json               # 감성 분석용 사전 (SentiWord)
-    ├───stopwords-ko.txt                  # 한국어 불용어 사전
-    ├───raw_data/                         # 수집된 원본 데이터 (pickle)
-    └───analysis_data/                    # 분석용으로 가공된 데이터
+## 5. 데이터
+
+본 프로젝트에서 사용된 원본 데이터는 허깅페이스 데이터셋에서 다운로드할 수 있습니다.
+
+- **데이터셋 링크**: [bong9513/nationalpension_textmining_crawled_rawdata](https://huggingface.co/datasets/bong9513/nationalpension_textmining_crawled_rawdata)
+
+분석에 사용된 감성 사전, 불용어 리스트 등의 기타 데이터는 `data/` 폴더에 포함되어 있습니다.
+
 ```
 
 ## 3. 실행 방법
