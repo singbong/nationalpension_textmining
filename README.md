@@ -35,7 +35,7 @@ nationalpension_textmining/
 프로젝트 실행에 필요한 주요 라이브러리는 다음과 같습니다.
 
 ```bash
-pip install pandas selenium beautifulsoup4 requests konlpy nltk matplotlib
+pip install pandas selenium beautifulsoup4 requests konlpy nltk matplotlib scikit-learn
 ```
 
 ### 3.2. 데이터 수집
