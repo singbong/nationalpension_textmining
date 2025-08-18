@@ -20,14 +20,6 @@ nationalpension_textmining/
 │   ├───블로그 데이터 시계열 그래프.ipynb      # 블로그 데이터 감성 분석 시계열 시각화
 │   └───카페+블로그 전처리 및 분석.ipynb      # 블로그 및 카페 데이터 전처리, 토픽 모델링, 감성 분석
 │
-## 5. 데이터
-
-본 프로젝트에서 사용된 원본 데이터는 허깅페이스 데이터셋에서 다운로드할 수 있습니다.
-
-- **데이터셋 링크**: [bong9513/nationalpension_textmining_crawled_rawdata](https://huggingface.co/datasets/bong9513/nationalpension_textmining_crawled_rawdata)
-
-분석에 사용된 감성 사전, 불용어 리스트 등의 기타 데이터는 `data/` 폴더에 포함되어 있습니다.
-
 ```
 
 ## 3. 실행 방법
@@ -67,3 +59,12 @@ pip install pandas selenium beautifulsoup4 requests konlpy nltk matplotlib sciki
     *   **감성 분석**: `SentiWord_info.json`, `Korean-NRC-EmoLex.txt` 등의 감성 사전을 활용하여 텍스트의 긍정/부정/중립 감성을 분석하고 점수화합니다.
     *   **토픽 모델링**: LDA(Latent Dirichlet Allocation)와 같은 토픽 모델링 기법을 적용하여 텍스트 데이터의 주요 주제를 식별합니다.
     *   **시계열 분석**: 월별 또는 분기별로 데이터의 감성 점수 변화를 추적하고, `matplotlib`을 사용하여 시계열 그래프로 시각화하여 여론의 동향을 파악합니다.
+
+
+## 5. 데이터
+
+본 프로젝트에서 사용된 원본 데이터는 허깅페이스 데이터셋에서 다운로드할 수 있습니다.
+
+- **데이터셋 링크**: [bong9513/nationalpension_textmining_crawled_rawdata](https://huggingface.co/datasets/bong9513/nationalpension_textmining_crawled_rawdata)
+
+분석에 사용된 감성 사전, 불용어 리스트 등의 기타 데이터는 `data/` 폴더에 포함되어 있습니다.
