@@ -4,10 +4,14 @@ data/raw_data/
 # 분석 결과
 data/analysis_data/
 
-# LaTeX 임시 파일
+# LaTeX 빌드 파일
 *.aux
 *.log
 *.fls
 *.fdb_latexmk
+*.synctex.gz
+*.pdf
+*.txt
 
-# PDF 파일은 허용 (data_pipeline.pdf 포함)
+# data_pipeline.png는 추적 (README에서 사용)
+!data_pipeline.png
