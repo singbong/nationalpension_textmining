@@ -1,0 +1,147 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, fit, backgrounds}
+
+% 색상 팔레트 정의
+\definecolor{collectColor}{RGB}{59, 130, 246}   % 파란색
+\definecolor{preprocessColor}{RGB}{52, 168, 83}   % 초록색
+\definecolor{analysisColor}{RGB}{235, 107, 86}    % 주황색
+\definecolor{grayColor}{RGB}{100, 100, 100}     % 회색
+\definecolor{lightGray}{RGB}{240, 240, 240}    % 연한 회색
+
+% 노드 스타일 정의
+\tikzset{
+    process/.style={
+        rectangle,
+        rounded corners,
+        minimum width=2.5cm,
+        minimum height=1.2cm,
+        text centered,
+        draw=black,
+        fill=lightGray,
+        font=\small
+    },
+    subprocess/.style={
+        rectangle,
+        rounded corners,
+        minimum width=2cm,
+        minimum height=1cm,
+        text centered,
+        draw=black,
+        fill=white,
+        font=\tiny
+    },
+    arrow/.style={
+        -Latex,
+        thick,
+        grayColor
+    },
+    phase/.style={
+        rectangle,
+        rounded corners,
+        minimum width=3cm,
+        minimum height=5cm,
+        draw=black,
+        fill=white,
+        thick,
+        font=\small
+    },
+    phaseTitle/.style={
+        rectangle,
+        rounded corners,
+        fill=grayColor,
+        text=white,
+        font=\small\bfseries,
+        text centered,
+        minimum width=3cm,
+        minimum height=0.8cm
+    }
+}
+
+\begin{document}
+
+\begin{tikzpicture}[node distance=1.5cm]
+
+    % ============ 데이터 수집 단계 ============
+    \node[phaseTitle] (collectTitle) at (0, 0) {데이터 수집};
+    
+    % 크롤링 소스 노드들
+    \node[subprocess, fill=collectColor!20] (news) at (0, -1.5) {네이버 뉴스};
+    \node[subprocess, fill=collectColor!20] (blog) at (3, -1.5) {네이버 블로그};
+    \node[subprocess, fill=collectColor!20] (cafe) at (6, -1.5) {네이버 카페};
+    
+    % newspaper3k 본문 추출
+    \node[process, fill=collectColor!30] (extract) at (3, -3.5) {newspaper3k\\본문 추출};
+    
+    % Pickle 저장
+    \node[process, fill=collectColor!40] (pickle) at (3, -5.5) {Pickle\\저장};
+    
+    % 수집 단계 화살표
+    \draw[arrow] (news) -- (extract.west);
+    \draw[arrow] (blog) -- (extract);
+    \draw[arrow] (cafe) -- (extract.east);
+    \draw[arrow] (extract) -- (pickle);
+    
+    % 수집 단계 경계 박스
+    \node[phase, fit=(collectTitle) (news) (blog) (cafe) (extract) (pickle)] (collectPhase) {};
+    \node[above=0.1cm of collectPhase.north, font=\small\bfseries, text=collectColor] at (collectPhase.north) {데이터 수집 단계};
+
+    % ============ 데이터 전처리 단계 ============
+    \node[phaseTitle, right=2cm of collectPhase] (preprocessTitle) {};
+    
+    % 한글 정제
+    \node[subprocess, fill=preprocessColor!20] (clean) at (0, -1.5) {한글 정제\\(정규표현식)};
+    
+    % 결측치 제거
+    \node[subprocess, fill=preprocessColor!20] (removeNa) at (0, -3) {결측치\\제거};
+    
+    % Komoran 형태소 분석
+    \node[process, fill=preprocessColor!30] (komoran) at (0, -4.5) {Komoran\\형태소 분석};
+    
+    % 불용어 제거
+    \node[process, fill=preprocessColor!40] (stopword) at (0, -6) {불용어\\제거};
+    
+    % 전처리 화살표
+    \draw[arrow] (clean) -- (removeNa);
+    \draw[arrow] (removeNa) -- (komoran);
+    \draw[arrow] (komoran) -- (stopword);
+    
+    % 전처리 단계 경계 박스
+    \node[phase, fit=(clean) (removeNa) (komoran) (stopword)] (preprocessPhase) {};
+    \node[above=0.1cm of preprocessPhase.north, font=\small\bfseries, text=preprocessColor] at (preprocessPhase.north) {데이터 전처리 단계};
+
+    % ============ 데이터 분석 단계 ============
+    \node[phaseTitle, right=2cm of preprocessPhase] (analysisTitle) {};
+    
+    % 키워드 빈도 분석
+    \node[subprocess, fill=analysisColor!20] (freq) at (0, -1.5) {키워드 빈도\\(Top 500)};
+    
+    % 감성 분석
+    \node[subprocess, fill=analysisColor!20] (sentiment) at (0, -3) {감성 분석\\(사전 기반)};
+    
+    % 토픽 모델링
+    \node[subprocess, fill=analysisColor!20] (lda) at (0, -4.5) {토픽 모델링\\(LDA)};
+    
+    % 결과 저장
+    \node[process, fill=analysisColor!40] (results) at (0, -6) {결과 저장\\(CSV)};
+    
+    % 시계열 시각화
+    \node[process, fill=analysisColor!50] (visualize) at (0, -7.5) {시계열\\시각화\\(matplotlib)};
+    
+    % 분석 화살표
+    \draw[arrow] (freq) -- (sentiment);
+    \draw[arrow] (sentiment) -- (lda);
+    \draw[arrow] (lda) -- (results);
+    \draw[arrow] (results) -- (visualize);
+    
+    % 분석 단계 경계 박스
+    \node[phase, fit=(freq) (sentiment) (lda) (results) (visualize)] (analysisPhase) {};
+    \node[above=0.1cm of analysisPhase.north, font=\small\bfseries, text=analysisColor] at (analysisPhase.north) {데이터 분석 단계};
+
+    % ============ 단계 간 화살표 ============
+    \draw[arrow, dashed] (pickle.east) -- (clean.west) node[midway, above] {raw\_data};
+    \draw[arrow, dashed] (stopword.east) -- (freq.west) node[midway, above] {tokenized};
+
+\end{tikzpicture}
+
+\end{document}

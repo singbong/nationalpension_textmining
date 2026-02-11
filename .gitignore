@@ -1,1 +1,13 @@
-data/
+# 원본 데이터
+data/raw_data/
+
+# 분석 결과
+data/analysis_data/
+
+# LaTeX 임시 파일
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+
+# PDF 파일은 허용 (data_pipeline.pdf 포함)

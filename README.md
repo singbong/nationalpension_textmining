@@ -44,6 +44,11 @@ nationalpension_textmining/
 └── README.md
 ```
 
+## 데이터 파이프라인
+
+![데이터 파이프라인](data_pipeline.png)
+
+
 ---
 
 ## 기술 스택
